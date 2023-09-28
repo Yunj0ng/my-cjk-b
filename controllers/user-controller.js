@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 // sequelize操作符
 const {Op} = require('sequelize')
 
-const { User } = require("../models");
+const { User, VocabularyData } = require("../models");
 // 判斷資料格式
 const validator = require("validator");
 const helpers = require("../_helpers");
@@ -133,7 +133,6 @@ const userController = {
               },
             ],
           },
-          include: [{ model: User, attributes: { exclude: ["password"] } }],
           raw: true,
           nest: true,
         }),
@@ -147,9 +146,9 @@ const userController = {
 			next(err)
 		}
 	},
-	getAuth:(req,res,next)=>{
-		helpers.getUser(req) ? res.json({success: true, message:null}) : res.json({success: false, message:'unauthorized'})
-	}
+	// getAuth:(req,res,next)=>{
+	// 	helpers.getUser(req) ? res.json({success: true, message:null}) : res.json({success: false, message:'unauthorized'})
+	// }
 };
 
 module.exports = userController;

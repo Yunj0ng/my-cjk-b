@@ -1,16 +1,12 @@
-const {User,VocabularyData} =require('../models')
-const helpers = require('../_helpers')
+const {VocabularyData} =require('../models')
 
 const vocabularyController = {
 	getVocabulary:async (req,res,next)=>{
 		try{
-			const vocabulary =  await VocabularyData.findByPk(req.params.id,{
-				include:{model: User, attributes:{
-					exculde:'password'
-				}},
-				raw:true,
-				nest:true
-			})
+			const vocabulary = await VocabularyData.findByPk(req.params.id, {
+        raw: true,
+        nest: true,
+      });
 			if(!vocabulary){
 				const err = new Error('單字不存在')
 				throw err
@@ -23,13 +19,14 @@ const vocabularyController = {
 	postVocabulary:async (req,res,next)=>{
 		try{
 			const {
+				UserId,
         OriginalText_Korean,
         OriginalText_Chinese,
         OriginalText_Japanese,
       } = req.body;
 			
 			const newVocabulary = await VocabularyData.create({
-        UserId: helpers.getUser(req).id,
+        UserId,
         OriginalText_Korean,
         OriginalText_Chinese,
         OriginalText_Japanese,
@@ -45,14 +42,14 @@ const vocabularyController = {
 	putVocabulary: async (req,res,next)=>{
 		try{
 			const {id} = req.params
-			const { TranslatedText_Korean,
+			const { UserId,TranslatedText_Korean,
       TranslatedText_Chinese,
       TranslatedText_Japanese }=req.body
 			// 查找現有單字
 			const vocabulary = await VocabularyData.findOne({
 				where:{
 					id,
-					UserId: helpers.getUser(req).id
+					UserId,
 				}
 			})
 
@@ -62,7 +59,7 @@ const vocabularyController = {
 			}
 
 			// 更新單字
-			let updatedVocabulary = await vocabulary.upeate({
+			let updatedVocabulary = await vocabulary.update({
         TranslatedText_Korean:
           TranslatedText_Korean || vocabulary.TranslatedText_Korean,
         TranslatedText_Chinese:
