@@ -60,6 +60,7 @@ const vocabularyController = {
 
 			// 更新單字
 			let updatedVocabulary = await vocabulary.update({
+				
         TranslatedText_Korean:
           TranslatedText_Korean || vocabulary.TranslatedText_Korean,
         TranslatedText_Chinese:

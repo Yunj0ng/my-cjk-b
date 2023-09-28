@@ -2,7 +2,7 @@ module.exports = {
   generalErrorHandler(err, req, res, next) {
     if (err instanceof Error) {
       res.status(err.status || 500).json({
-        success: "false",
+        success: false,
         message: `${err.name}: ${err.message}`,
       });
     } else {

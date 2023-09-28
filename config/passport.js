@@ -12,7 +12,7 @@ const JWTSecret = process.env.JWT_SECRET || "SECRET";
 // 本地端驗證使用者 cd=callbackfunction
 passport.use(
   new LocalStrategy(
-    { usernameField: "account" },
+    { usernameField: "account", passwordField: "password" },
     async (account, password, cb) => {
       try {
         const user = await User.findOne({
@@ -25,7 +25,7 @@ passport.use(
           throw err;
         }
         // 使用者存在 驗證密碼
-        const result = bcrypt.compare(password, user.password);
+        const result = await bcrypt.compare(password, user.password);
         // 密碼錯誤
         if (!result) {
           throw new Error("密碼錯誤");
