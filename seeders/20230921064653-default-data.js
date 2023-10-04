@@ -38,7 +38,7 @@ return queryInterface
           TranslatedText_Japanese: "こんにちは",
           TranslatedText_Chinese: "你好",
           UserId: userId,
-          CreatedAt: new Date(),
+          createdAt: new Date(),
           updatedAt: new Date(),
         },
       ],
