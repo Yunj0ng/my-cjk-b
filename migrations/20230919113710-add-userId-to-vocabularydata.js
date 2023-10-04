@@ -2,16 +2,17 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-      return queryInterface.addColumn('Vocabularydata','UserId', { type:Sequelize.INTEGER,
-      allowNull:false,
-      references:{
-        model:'Users',
-        key:'id'
-      }
-     });
+      return queryInterface.addColumn("VocabularyData", "UserId", {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+      });
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn('Vocabularydata','UserId')
+    return queryInterface.removeColumn("VocabularyData", "UserId");
   }
 };
